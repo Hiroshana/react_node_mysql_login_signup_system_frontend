@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Register = () => {
+const Login = () => {
     const [values, setValues] = useState({
-        username: "",
         email: "",
         password: "",
     });
@@ -19,35 +18,23 @@ const Register = () => {
         e.preventDefault()
 
         try {
-            const response = await axios.post('http://localhost:3000/auth/register', values)
+            const response = await axios.post('http://localhost:3000/auth/login', values)
 
             if (response.status === 201) {
-                navigate('/login')
+                localStorage.setItem('token', response.data.token)
+                navigate('/')
             }
 
         } catch (error) {
             console.log(error)
         }
-
     }
 
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="shadow-lg px-8 py-5 border w-96 border-gray-300">
-                <h2 className="text-lg font-bold mb-4">Register</h2>
+                <h2 className="text-lg font-bold mb-4">Login</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label htmlFor="username" className="block text-gray-500">
-                            Username
-                        </label>
-                        <input
-                            type="text"
-                            placeholder="Enter Username"
-                            className="w-full px-3 py-2 border border-gray-300"
-                            name="username"
-                            onChange={handleChanges}
-                        />
-                    </div>
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-gray-500">
                             Email
@@ -77,9 +64,9 @@ const Register = () => {
                     </button>
                 </form>
                 <div className="text-center">
-                    <span className="text-gray-600">Already have a account ? </span>
-                    <Link to="/login" className="text-blue-500 font-semibold">
-                        Login
+                    <span className="text-gray-600">Don't have a account ? </span>
+                    <Link to="/register" className="text-blue-500 font-semibold">
+                        Register
                     </Link>
                 </div>
             </div>
@@ -87,4 +74,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Login;
