@@ -1,9 +1,15 @@
-import './App.css'
-
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Home from "./pages/Home"
+import Register from "./pages/Register"
 function App() {
   return (
     <>
-      <h1 className='text-5xl text-blue-700 text-center'>Welcome</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
